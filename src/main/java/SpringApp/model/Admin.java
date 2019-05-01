@@ -1,4 +1,4 @@
-package model;
+package SpringApp.model;
 
 import javax.persistence.*;
 
@@ -40,7 +40,7 @@ public class Admin {
     @Override
     public String toString() {
         return String.format(
-                "Admin[id=%d, firstName='%s', lastName='%s']",
+                "Admin[id=%d, firstMidName='%s', lastName='%s']",
                 id, firstMidName, lastName);
     }
 

@@ -1,8 +1,7 @@
-package controller;
+package SpringApp.controller;
 
-import model.Admin;
-import model.AdminRepository;
-import exception.ResourceNotFoundException;
+import SpringApp.model.Admin;
+import SpringApp.model.AdminRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;

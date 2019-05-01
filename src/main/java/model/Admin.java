@@ -28,13 +28,20 @@ public class Admin {
     private String password;
 
 
-    public Admin(){}
+    protected Admin(){}
 
     public Admin(String firstMidName, String lastName, String username, String password) {
         this.firstMidName = firstMidName;
         this.lastName = lastName;
         this.username = username;
         this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return String.format(
+                "Admin[id=%d, firstName='%s', lastName='%s']",
+                id, firstMidName, lastName);
     }
 
     public Integer getId() {

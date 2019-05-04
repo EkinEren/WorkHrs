@@ -6,9 +6,12 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <html lang="en">
   <head>
+      <script src="webjars/jquery/3.4.0/jquery.min.js"></script>
+      <script src="webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+      <link rel="stylesheet"
+            href="${pageContext.request.contextPath}/webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
       <meta charset="utf-8">
       <title>Log in with your account</title>
-
   </head>
 
   <body>
@@ -29,6 +32,5 @@
         </div>
       </form>
     </div>
-
   </body>
 </html>

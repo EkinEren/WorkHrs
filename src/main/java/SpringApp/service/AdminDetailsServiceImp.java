@@ -26,7 +26,6 @@ public class AdminDetailsServiceImp implements UserDetailsService {
     BCryptPasswordEncoder encoder = passwordEncoder();
 
     @Override
-    @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Admin admin = adminRepository.findByUsername(username);
         if (admin == null) throw new UsernameNotFoundException(username+" Not Found");

@@ -20,10 +20,10 @@ public class AdminController {
     private SecurityService securityService;
 
     // Get All Admin Users, for production
-    @GetMapping("/admins")
+    /*@GetMapping("/admins")
     public List<Admin> getAllAdmins() {
         return adminRepository.findAll();
-    }
+    }*/
 
     /* We don't define /login POST controller, it is provided by Spring Security */
 

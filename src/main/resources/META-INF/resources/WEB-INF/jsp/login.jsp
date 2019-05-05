@@ -20,7 +20,7 @@
     <div class="row justify-content-center">
         <div class="col-lg-6">
         <form method="POST" action="${contextPath}/login">
-            <h2 class="display-4">Administration Log in</h2>
+            <h2 class="display-4">Administration Login</h2>
 
             <div class="form-group ${error != null ? 'has-error' : ''}">
                 <span>${message}</span>

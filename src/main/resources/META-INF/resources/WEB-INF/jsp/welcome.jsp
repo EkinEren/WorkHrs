@@ -14,14 +14,20 @@
 </head>
 <body>
   <div class="container">
+      <div class="jumbotron">
     <c:if test="${pageContext.request.userPrincipal.name != null}">
 
         <form id="logoutForm" method="POST" action="${contextPath}/logout">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form>
 
-        <h2>Welcome ${pageContext.request.userPrincipal.name} | <a onclick="document.forms['logoutForm'].submit()">Logout</a></h2>
+        <h1 class="display-4">Welcome ${pageContext.request.userPrincipal.name} ! </h1>
+        <hr class="my-4">
+        <p class="lead">
+            <a class="btn btn-primary btn-lg" onclick="document.forms['logoutForm'].submit()" role="button">Logout</a>
+        </p>
     </c:if>
+      </div>
   </div>
 </body>
 </html>

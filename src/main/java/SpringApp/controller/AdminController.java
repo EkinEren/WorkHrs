@@ -13,18 +13,6 @@ import java.util.List;
 @Controller
 public class AdminController {
 
-    @Autowired
-    private AdminRepository adminRepository;
-
-    @Autowired
-    private SecurityService securityService;
-
-    // Get All Admin Users, for production
-    /*@GetMapping("/admins")
-    public List<Admin> getAllAdmins() {
-        return adminRepository.findAll();
-    }*/
-
     /* We don't define /login POST controller, it is provided by Spring Security */
 
     @GetMapping("/login")

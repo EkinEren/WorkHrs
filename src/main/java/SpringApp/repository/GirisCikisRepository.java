@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface GirisCikisRepository extends JpaRepository<PtsGiriscikisEntity, Long> {
 
-    List<PtsGiriscikisEntity> findAllByKartno(Long id);
+    List<PtsGiriscikisEntity> findAllByPersonelid(Long id);
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Date;
 import java.util.List;
 
 @Service
@@ -19,5 +20,10 @@ public class PersonalTimeServiceImp implements PersonelTimeService {
     @Transactional
     public List<PtsGiriscikisEntity> findAllByPersonelid(Long id) {
         return girisCikisRepository.findAllByPersonelid(id);
+    }
+
+    @Override
+    public List<PtsGiriscikisEntity> findAllByCikistarihiAndPersonelidOrderByGirissaati(Date date,Long id) {
+        return girisCikisRepository.findAllByCikistarihiAndPersonelidOrderByGirissaati(date,id);
     }
 }

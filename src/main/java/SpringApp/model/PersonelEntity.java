@@ -1,5 +1,7 @@
 package SpringApp.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -157,7 +159,7 @@ public class PersonelEntity {
     private Byte wckesintisiuygula;
     private BigDecimal ncsaatucreti;
 
-    protected PersonelEntity(){}
+    public PersonelEntity(){}
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -1996,5 +1998,16 @@ public class PersonelEntity {
         result = 31 * result + (wckesintisiuygula != null ? wckesintisiuygula.hashCode() : 0);
         result = 31 * result + (ncsaatucreti != null ? ncsaatucreti.hashCode() : 0);
         return result;
+    }
+
+
+    @Override
+    public String toString() {
+        return "PersonelEntity{" +
+                "id=" + id +
+                ", kartno='" + kartno + '\'' +
+                ", ad='" + ad + '\'' +
+                ", soyad='" + soyad + '\'' +
+                '}';
     }
 }

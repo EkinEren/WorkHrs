@@ -61,6 +61,7 @@ public class PersonelController {
         LocalDate startOfMonth = date.atDay(1);
         LocalDate endOfMonth = date.atEndOfMonth().plusDays(1);
 
+        /* Maybe these should be methods in the service layer? */
         /*Çalışanın o ay için giriş çıkış bilgileri*/
         for (LocalDate d = startOfMonth; d.isBefore(endOfMonth); d = d.plusDays(1)) {
 
@@ -81,6 +82,15 @@ public class PersonelController {
             LocalTime girisSaati = day.get(0).getGirissaati() != null ? day.get(0).getGirissaati().toLocalTime() : LocalTime.of(0,0,0);
             LocalTime cikisSaati = day.get(day.size() - 1).getCikissaati() !=null ? day.get(day.size() - 1).getCikissaati().toLocalTime() : LocalTime.of(0,0,0);
             PersonelReport p = new PersonelReport(d,girisSaati,cikisSaati,netSure);
+
+            /*Dışarıda geçirilen süre 1 saaten az ise 1 saat olarak farz edilip net süre hesaplanırken toplam süreden çıkarılacaktır. */
+            if (p.getDisariSure().isBefore(LocalTime.of(1,0))) {
+
+                LocalTime disari = LocalTime.of(1,0).minusNanos(p.getDisariSure().toNanoOfDay());
+                p.setNetSure(netSure.minusNanos(disari.toNanoOfDay()));
+                p.setEksikFazlaCalisma(p.getEksikFazlaCalisma().minusNanos(disari.toNanoOfDay()));
+            }
+
             reports.add(p);
         }
 

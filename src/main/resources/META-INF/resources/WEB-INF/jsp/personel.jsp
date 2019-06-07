@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <html>
@@ -25,6 +26,10 @@
     <title>Start page</title>
 </head>
 <body>
+
+<fmt:setLocale value="tr_TR" />
+<fmt:parseDate var="testdate" value="08:00" pattern="HH:mm" />
+
 <div class="container">
     <div class="inline-div">
         <h2 class="display-4">Personel Aylık Giriş/Çıkış Raporu</h2>
@@ -65,6 +70,7 @@
             <td class="table-info" colspan="10">1.Hafta</td>
         </tr>
         <c:forEach items="${hafta1}" var="item">
+            <fmt:parseDate  value="${item.netSure}"  type="date" pattern="HH:mm" var="parsedDate" />
         <tr>
             <td>${item.tarih}</td>
             <td>${item.ilkGiris}</td>
@@ -72,7 +78,14 @@
             <td>${item.toplamSure}</td>
             <td>${item.disariSure}</td>
             <td>${item.netSure}</td>
-            <td>${item.eksikFazlaCalisma}</td>
+            <c:choose>
+                <c:when test= "${parsedDate.time gt testdate.time}">
+                    <td>${item.eksikFazlaCalisma}</td>
+                </c:when>
+                <c:otherwise>
+                    <td style="background-color: orange">${item.eksikFazlaCalisma}</td>
+                </c:otherwise>
+            </c:choose>
             <td>${item.gunlukMesaiSuresi}</td>
             <td><button type="button" class="btn btn-link">Düzenle</button></td>
             <td><button type="button" class="btn btn-link">Sil</button></td>
@@ -85,6 +98,7 @@
             <td class="table-info" colspan="10">2.Hafta</td>
         </tr>
         <c:forEach items="${hafta2}" var="item">
+            <fmt:parseDate  value="${item.netSure}"  type="date" pattern="HH:mm" var="parsedDate" />
             <tr>
                 <td>${item.tarih}</td>
                 <td>${item.ilkGiris}</td>
@@ -92,7 +106,14 @@
                 <td>${item.toplamSure}</td>
                 <td>${item.disariSure}</td>
                 <td>${item.netSure}</td>
-                <td>${item.eksikFazlaCalisma}</td>
+                <c:choose>
+                    <c:when test= "${parsedDate.time gt testdate.time}">
+                        <td>${item.eksikFazlaCalisma}</td>
+                    </c:when>
+                    <c:otherwise>
+                        <td style="background-color: orange">${item.eksikFazlaCalisma}</td>
+                    </c:otherwise>
+                </c:choose>
                 <td>${item.gunlukMesaiSuresi}</td>
                 <td><button type="button" class="btn btn-link">Düzenle</button></td>
                 <td><button type="button" class="btn btn-link">Sil</button></td>
@@ -105,6 +126,7 @@
             <td class="table-info" colspan="10">3.Hafta</td>
         </tr>
         <c:forEach items="${hafta3}" var="item">
+            <fmt:parseDate  value="${item.netSure}"  type="date" pattern="HH:mm" var="parsedDate" />
             <tr>
                 <td>${item.tarih}</td>
                 <td>${item.ilkGiris}</td>
@@ -112,7 +134,14 @@
                 <td>${item.toplamSure}</td>
                 <td>${item.disariSure}</td>
                 <td>${item.netSure}</td>
-                <td>${item.eksikFazlaCalisma}</td>
+                <c:choose>
+                    <c:when test= "${parsedDate.time gt testdate.time}">
+                        <td>${item.eksikFazlaCalisma}</td>
+                    </c:when>
+                    <c:otherwise>
+                        <td style="background-color: orange">${item.eksikFazlaCalisma}</td>
+                    </c:otherwise>
+                </c:choose>
                 <td>${item.gunlukMesaiSuresi}</td>
                 <td><button type="button" class="btn btn-link">Düzenle</button></td>
                 <td><button type="button" class="btn btn-link">Sil</button></td>
@@ -125,6 +154,7 @@
             <td class="table-info" colspan="10">4.Hafta</td>
         </tr>
         <c:forEach items="${hafta4}" var="item">
+            <fmt:parseDate  value="${item.netSure}"  type="date" pattern="HH:mm" var="parsedDate" />
             <tr>
                 <td>${item.tarih}</td>
                 <td>${item.ilkGiris}</td>
@@ -132,7 +162,14 @@
                 <td>${item.toplamSure}</td>
                 <td>${item.disariSure}</td>
                 <td>${item.netSure}</td>
-                <td>${item.eksikFazlaCalisma}</td>
+                <c:choose>
+                    <c:when test= "${parsedDate.time gt testdate.time}">
+                        <td>${item.eksikFazlaCalisma}</td>
+                    </c:when>
+                    <c:otherwise>
+                        <td style="background-color: orange">${item.eksikFazlaCalisma}</td>
+                    </c:otherwise>
+                </c:choose>
                 <td>${item.gunlukMesaiSuresi}</td>
                 <td><button type="button" class="btn btn-link">Düzenle</button></td>
                 <td><button type="button" class="btn btn-link">Sil</button></td>
@@ -145,6 +182,7 @@
             <td class="table-info" colspan="10">5.Hafta</td>
         </tr>
         <c:forEach items="${hafta5}" var="item">
+            <fmt:parseDate  value="${item.netSure}"  type="date" pattern="HH:mm" var="parsedDate" />
             <tr>
                 <td>${item.tarih}</td>
                 <td>${item.ilkGiris}</td>
@@ -152,7 +190,14 @@
                 <td>${item.toplamSure}</td>
                 <td>${item.disariSure}</td>
                 <td>${item.netSure}</td>
-                <td>${item.eksikFazlaCalisma}</td>
+                <c:choose>
+                    <c:when test= "${parsedDate.time gt testdate.time}">
+                        <td>${item.eksikFazlaCalisma}</td>
+                    </c:when>
+                    <c:otherwise>
+                        <td style="background-color: orange">${item.eksikFazlaCalisma}</td>
+                    </c:otherwise>
+                </c:choose>
                 <td>${item.gunlukMesaiSuresi}</td>
                 <td><button type="button" class="btn btn-link">Düzenle</button></td>
                 <td><button type="button" class="btn btn-link">Sil</button></td>

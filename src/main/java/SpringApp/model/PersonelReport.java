@@ -21,7 +21,9 @@ public class PersonelReport {
         this.netSure = netSure;
         toplamSure = sonCikis.minusNanos(ilkGiris.toNanoOfDay());
         disariSure = toplamSure.minusNanos(netSure.toNanoOfDay());
-        eksikFazlaCalisma = LocalTime.of(8,0).minusNanos(toplamSure.toNanoOfDay());
+        eksikFazlaCalisma = netSure.isBefore(LocalTime.of(8,0)) ?
+                LocalTime.of(8,0).minusNanos(netSure.toNanoOfDay())
+                : netSure.minusNanos(LocalTime.of(8,0).toNanoOfDay());
         gunlukMesaiSuresi = toplamSure.equals(LocalTime.of(0,0)) ? LocalTime.of(0,0) : LocalTime.of(8,0);
     }
 

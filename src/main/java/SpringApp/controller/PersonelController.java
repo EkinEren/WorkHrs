@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.sql.Date;
 import java.text.ParseException;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.YearMonth;
@@ -83,8 +84,9 @@ public class PersonelController {
             LocalTime cikisSaati = day.get(day.size() - 1).getCikissaati() !=null ? day.get(day.size() - 1).getCikissaati().toLocalTime() : LocalTime.of(0,0,0);
             PersonelReport p = new PersonelReport(d,girisSaati,cikisSaati,netSure);
 
-            /*Dışarıda geçirilen süre 1 saaten az ise 1 saat olarak farz edilip net süre hesaplanırken toplam süreden çıkarılacaktır. */
-            if (p.getDisariSure().isBefore(LocalTime.of(1,0))) {
+            /*Dışarıda geçirilen süre 1 saaten az ise 1 saat olarak farz edilip net süre hesaplanırken toplam süreden çıkarılacaktır.
+            * Bu süre 0 ise hiç araya çıkmamış gibi kabul edip, toplam süreden çıkarmadım.*/
+            if (p.getDisariSure().isBefore(LocalTime.of(1,0)) && !p.getDisariSure().equals(LocalTime.of(0,0))) {
 
                 LocalTime disari = LocalTime.of(1,0).minusNanos(p.getDisariSure().toNanoOfDay());
                 p.setNetSure(netSure.minusNanos(disari.toNanoOfDay()));
@@ -104,6 +106,16 @@ public class PersonelController {
         List<PersonelReport> week4 = reports.stream().filter(p -> p.getTarih().get(WeekFields.of(locale).weekOfMonth()) == 4).collect(Collectors.toList());
         List<PersonelReport> week5 = reports.stream().filter(p -> p.getTarih().get(WeekFields.of(locale).weekOfMonth()) == 5).collect(Collectors.toList());
 
+        /*Hafta toplam saatleri*/
+        List<String> week1Total = totalOfWeek(week1);
+        List<String> week2Total = totalOfWeek(week2);
+        List<String> week3Total = totalOfWeek(week3);
+        List<String> week4Total = totalOfWeek(week4);
+        List<String> week5Total = totalOfWeek(week5);
+
+        /*Aylık toplam çalışma saatleri*/
+        List<String> monthlyTotal = totalOfWeek(reports);
+
 
         model.addAttribute("kartno",personel.getKartno());
         model.addAttribute("id",personel.getId());
@@ -115,7 +127,59 @@ public class PersonelController {
         model.addAttribute("hafta3",week3);
         model.addAttribute("hafta4",week4);
         model.addAttribute("hafta5",week5);
+        model.addAttribute("hafta1Toplam",week1Total);
+        model.addAttribute("hafta2Toplam",week2Total);
+        model.addAttribute("hafta3Toplam",week3Total);
+        model.addAttribute("hafta4Toplam",week4Total);
+        model.addAttribute("hafta5Toplam",week5Total);
+        model.addAttribute("aylikToplam",monthlyTotal);
 
         return "personel";
+    }
+
+    public static List<String> totalOfWeek(List<PersonelReport> week){
+
+        List<String> total = new ArrayList<>();
+        Duration toplamSure = Duration.ofHours(0);
+        Duration disariSure = Duration.ofHours(0);
+        Duration netSure = Duration.ofHours(0);
+        Duration eksikFazlaSure = Duration.ofHours(0);
+        Duration mesaiSure = Duration.ofHours(0);
+
+        for(int i = 0;i < week.size();i++){
+
+            toplamSure = toplamSure.plusHours(week.get(i).getToplamSure().getHour());
+            toplamSure = toplamSure.plusMinutes(week.get(i).getToplamSure().getMinute());
+            disariSure = disariSure.plusHours(week.get(i).getDisariSure().getHour());
+            disariSure = disariSure.plusMinutes(week.get(i).getDisariSure().getMinute());
+            netSure = netSure.plusHours(week.get(i).getNetSure().getHour());
+            netSure = netSure.plusMinutes(week.get(i).getNetSure().getMinute());
+            mesaiSure = mesaiSure.plusHours(week.get(i).getGunlukMesaiSuresi().getHour());
+            mesaiSure = mesaiSure.plusMinutes(week.get(i).getGunlukMesaiSuresi().getMinute());
+
+            if(week.get(i).getNetSure().isAfter(LocalTime.of(8,0))) {
+                eksikFazlaSure = eksikFazlaSure.plusHours(week.get(i).getEksikFazlaCalisma().getHour());
+                eksikFazlaSure = eksikFazlaSure.plusMinutes(week.get(i).getEksikFazlaCalisma().getMinute());
+            }
+            else{
+                eksikFazlaSure = eksikFazlaSure.minusHours(week.get(i).getEksikFazlaCalisma().getHour());
+                eksikFazlaSure = eksikFazlaSure.minusMinutes(week.get(i).getEksikFazlaCalisma().getMinute());
+            }
+
+        }
+
+        String formattedTS = String.format("%d:%02d", toplamSure.toHours(), toplamSure.minusHours(toplamSure.toHours()).toMinutes());
+        String formattedDS = String.format("%d:%02d", disariSure.toHours(), disariSure.minusHours(disariSure.toHours()).toMinutes());
+        String formattedNS = String.format("%d:%02d", netSure.toHours(), netSure.minusHours(netSure.toHours()).toMinutes());
+        String formattedEFS = String.format("%d:%02d", eksikFazlaSure.toHours(), eksikFazlaSure.minusHours(eksikFazlaSure.toHours()).toMinutes());
+        String formattedMS = String.format("%d:%02d", mesaiSure.toHours(), mesaiSure.minusHours(mesaiSure.toHours()).toMinutes());
+
+        total.add(formattedTS);
+        total.add(formattedDS);
+        total.add(formattedNS);
+        total.add(formattedEFS);
+        total.add(formattedMS);
+
+        return total;
     }
 }

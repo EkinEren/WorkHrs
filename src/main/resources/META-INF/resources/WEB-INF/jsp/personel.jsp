@@ -2,6 +2,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <html>
@@ -91,6 +92,21 @@
             <td><button type="button" class="btn btn-link">Sil</button></td>
         </tr>
         </c:forEach>
+            <tr style ="font-weight: bold">
+                <td>Toplam </td>
+                <td></td>
+                <td></td>
+                <c:forEach items="${hafta1Toplam}" var="item">
+                    <c:choose>
+                        <c:when test="${fn:contains(item, '-')}">
+                            <td style="background-color: orange">${fn:replace(item, "-", "")}</td>
+                        </c:when>
+                        <c:otherwise>
+                            <td>${item}</td>
+                        </c:otherwise>
+                    </c:choose>
+                </c:forEach>
+            </tr>
         </c:if>
 
         <c:if test="${!empty hafta2}">
@@ -119,6 +135,21 @@
                 <td><button type="button" class="btn btn-link">Sil</button></td>
             </tr>
         </c:forEach>
+            <tr style ="font-weight: bold">
+                <td>Toplam </td>
+                <td></td>
+                <td></td>
+                <c:forEach items="${hafta2Toplam}" var="item">
+                    <c:choose>
+                        <c:when test="${fn:contains(item, '-')}">
+                            <td style="background-color: orange">${fn:replace(item, "-", "")}</td>
+                        </c:when>
+                        <c:otherwise>
+                            <td>${item}</td>
+                        </c:otherwise>
+                    </c:choose>
+                </c:forEach>
+            </tr>
         </c:if>
 
         <c:if test="${!empty hafta3}">
@@ -147,6 +178,21 @@
                 <td><button type="button" class="btn btn-link">Sil</button></td>
             </tr>
         </c:forEach>
+            <tr style ="font-weight: bold">
+                <td>Toplam </td>
+                <td></td>
+                <td></td>
+                <c:forEach items="${hafta3Toplam}" var="item">
+                    <c:choose>
+                        <c:when test="${fn:contains(item, '-')}">
+                            <td style="background-color: orange">${fn:replace(item, "-", "")}</td>
+                        </c:when>
+                        <c:otherwise>
+                            <td>${item}</td>
+                        </c:otherwise>
+                    </c:choose>
+                </c:forEach>
+            </tr>
         </c:if>
 
         <c:if test="${!empty hafta4}">
@@ -175,6 +221,21 @@
                 <td><button type="button" class="btn btn-link">Sil</button></td>
             </tr>
         </c:forEach>
+            <tr style ="font-weight: bold">
+                <td>Toplam </td>
+                <td></td>
+                <td></td>
+                <c:forEach items="${hafta4Toplam}" var="item">
+                    <c:choose>
+                        <c:when test="${fn:contains(item, '-')}">
+                            <td style="background-color: orange">${fn:replace(item, "-", "")}</td>
+                        </c:when>
+                        <c:otherwise>
+                            <td>${item}</td>
+                        </c:otherwise>
+                    </c:choose>
+                </c:forEach>
+            </tr>
         </c:if>
 
         <c:if test="${!empty hafta5}">
@@ -203,7 +264,38 @@
                 <td><button type="button" class="btn btn-link">Sil</button></td>
             </tr>
         </c:forEach>
+            <tr style ="font-weight: bold">
+                <td>Toplam </td>
+                <td></td>
+                <td></td>
+                <c:forEach items="${hafta5Toplam}" var="item">
+                    <c:choose>
+                        <c:when test="${fn:contains(item, '-')}">
+                            <td style="background-color: orange">${fn:replace(item, "-", "")}</td>
+                        </c:when>
+                        <c:otherwise>
+                            <td>${item}</td>
+                        </c:otherwise>
+                    </c:choose>
+                </c:forEach>
+            </tr>
         </c:if>
+
+        <tr style="background-color:lightblue;font-weight:bold">
+            <td>Aylık Toplam</td>
+            <td></td>
+            <td></td>
+            <c:forEach items="${aylikToplam}" var="item">
+                <c:choose>
+                    <c:when test="${fn:contains(item, '-')}">
+                        <td style="background-color: orange">${fn:replace(item, "-", "")}</td>
+                    </c:when>
+                    <c:otherwise>
+                        <td>${item}</td>
+                    </c:otherwise>
+                </c:choose>
+            </c:forEach>
+        </tr>
 
         </tbody>
     </table>

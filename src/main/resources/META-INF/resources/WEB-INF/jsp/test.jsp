@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+
 <html>
 <head>
     <script src="webjars/jquery/3.4.0/jquery.min.js"></script>
@@ -35,12 +36,12 @@
     <form:form method="POST" action="/test/personel">
 
         <div class="form-group">
-            <h2 class="display-4">Personel Giriş/Çıkış Raporu Sorgulama</h2>
+            <h2 class="display-4 p-3">Personel Giriş/Çıkış Raporu Sorgulama</h2>
             <form:input path="kartno" name="kartno" type="text" class="form-control m-2" placeholder="Kartno"
-                        autofocus="true"/>
+                        autofocus="true" required="required"/>
         </div>
 
-        <div class="form-group">
+        <div class="form-group pl-2">
             <div class="input-group date" id="datetimepicker11" data-target-input="nearest">
                 <input type="text" name="tarih" class="form-control datetimepicker-input" data-target="#datetimepicker11"/>
                 <div class="input-group-append" data-target="#datetimepicker11" data-toggle="datetimepicker">
@@ -49,7 +50,7 @@
             </div>
         </div>
 
-            <button class="btn btn-lg btn-primary btn-block m-2" type="submit">Get Employee</button>
+            <button class="btn btn-lg btn-primary btn-block m-2" type="submit">Personel Raporunu Getir</button>
         </div>
     </form:form>
 

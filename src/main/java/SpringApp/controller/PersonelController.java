@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.sql.Date;
-import java.text.ParseException;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -20,6 +19,7 @@ import java.time.temporal.WeekFields;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 
@@ -47,9 +47,13 @@ public class PersonelController {
 
 
     @PostMapping(value = "test/personel")
-    public String findPersonel(@ModelAttribute("PersonelEntity")PersonelEntity personelEntity, @RequestParam(name = "tarih") String tarih, ModelMap model) throws ParseException {
+    public String findPersonel(@ModelAttribute("PersonelEntity")PersonelEntity personelEntity, @RequestParam(name = "tarih") String tarih, ModelMap model) throws NoSuchElementException{
 
         PersonelEntity personel = this.personelRepository.findByKartno(personelEntity.getKartno());
+
+        if (personel == null){
+            throw new NoSuchElementException("Girilen kart numarasında bir personel bulunamadı.");
+        }
 
         List<PersonelReport> reports = new ArrayList<>();
 
@@ -61,6 +65,11 @@ public class PersonelController {
 
         LocalDate startOfMonth = date.atDay(1);
         LocalDate endOfMonth = date.atEndOfMonth().plusDays(1);
+
+        if(personel.getIsegiristarihi().toLocalDate().isAfter(endOfMonth)){
+            throw new NullPointerException("İstenilen tarih, personelin işe giriş tarihinden öncedir. "
+                    + personel.getKartno() + " kart numaralı personelin işe giriş tarihi: " + personel.getIsegiristarihi());
+        }
 
         /* Maybe these should be methods in the service layer? */
         /*Çalışanın o ay için giriş çıkış bilgileri*/
